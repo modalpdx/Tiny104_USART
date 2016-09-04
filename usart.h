@@ -16,6 +16,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include <string.h>
 
 // Initialize the USART. 
 void USART_Init( unsigned int ubrr );
