@@ -31,11 +31,11 @@ Component bits looked like this during my experimentation:
 
 - LED 0   (built-in, connected to pin PA5) is bit 0
 - LED 1   (external, connected to pin PA7) is bit 1
-- RELAY 1 (external, the coil part connected to pin PA6) is bit 2
+- RELAY 0 (external, the coil part connected to pin PA6) is bit 2
 
 The external LED was connected inline with a 330 ohm (I think) resistor.
 
-The RELAY used in testing was a simple OMR-106H reed relay:
+The reed relay used in testing was a simple OMR-106H reed relay:
 
 http://www.digikey.com/product-detail/en/te-connectivity-potter-brumfield-relays/OMR-106H,V000/PB886-ND/1095211
 
@@ -58,8 +58,8 @@ So, in RealTerm's "Send" tab:
 - Sending 0x03 (or 00000011) will turn on both LEDs.
 - Sending 0x02 (or 00000010) will turn on LED 1 and turn off LED 0 if it's on.
 - Sending 0x01 (or 00000001) will turn on LED 0 and turn off LED 1 if it's on.
-- Sending 0x04 (or 00000100) will turn on RELAY 1 and turn off all LEDs if any are on.
-- Sending 0x05 (or 00000101) will turn on RELAY 1 and LED 0 and turn off LED 1 if it's on.
+- Sending 0x04 (or 00000100) will turn on RELAY 0 and turn off all LEDs if any are on.
+- Sending 0x05 (or 00000101) will turn on RELAY 0 and LED 0 and turn off LED 1 if it's on.
 - Sending 0x00 (or 00000000) will turn off all components.
 
 You get the idea.

@@ -22,7 +22,7 @@
 void USART_Init( unsigned int ubrr );
 
 // Transmit a single byte.
- void USART_Transmit( unsigned char data );
+void USART_Transmit( unsigned char data );
 
 // Receive a single byte.
 unsigned char USART_Receive( void );
