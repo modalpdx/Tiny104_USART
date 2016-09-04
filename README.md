@@ -4,13 +4,13 @@ Control two LEDs and one reed relay with an ATTiny104 MCU via USART.
 
 ##BUILDING BLOCKS:
 
-Written for an Atmel Xplained Nano ATTiny104 eval board. This board
-includes a TPI programmer (no debugger), USB connectivity, one button, and
-one LED. It also has 1k of flash and 32 bytes of RAM, which is tight. All
-communication happens through the single USART built into the ATTiny104
-MCU. The pins for this USART are also routed through the USB connector so
-connecting via a micro USB cable works fine (no jumper wires or USB/TTL
-devices are required).
+Written for an [Atmel Xplained Nano ATTiny104 eval board](http://www.atmel.com/tools/ATTINY104-XNANO.aspx).
+This board includes a TPI programmer (no debugger), USB connectivity, one
+button, and one LED. It also has 1k of flash and 32 bytes of RAM, which is
+tight. All communication happens through the single USART built into the
+ATTiny104 MCU. The pins for this USART are also routed through the USB
+connector so connecting via a micro USB cable works fine (no jumper wires
+or USB/TTL devices are required).
 
 If you are not using this board, you will need to adjust ports, pins, etc.
 

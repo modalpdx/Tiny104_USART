@@ -100,26 +100,26 @@
 
 int main(void)
 {
-	// Initialize the USART
-	USART_Init(MYUBRR); 
-	
-	// Configure the Data Direction Register for Port A (DDRA).
-	// Set LED0, LED1, and RELAY0 pins as output (PA5, PA6, & PA7).
-	DDRA |= 1<<DDRA5 | 1<<DDRA6 | 1<<DDRA7;
+  // Initialize the USART
+  USART_Init(MYUBRR); 
+  
+  // Configure the Data Direction Register for Port A (DDRA).
+  // Set LED0, LED1, and RELAY0 pins as output (PA5, PA6, & PA7).
+  DDRA |= 1<<DDRA5 | 1<<DDRA6 | 1<<DDRA7;
 
-	// Now that data direction is established, enable the pins.
-	// Start with the LEDs off (built-in LED 0 is off if true, on if false.
-	// External LED 1 is the opposite: off if false, on if true.
-	PORTA |= 1<<LED0 & ~(LED1) & ~(RELAY0);
-	
-	// USART Receive Complete interrupt stuff
-	UCSRB |= (1 << RXCIE ); // Enable Receive Complete Interrupt Enable interrupt
-	sei(); // Enable Global Interrupt Enable flag
+  // Now that data direction is established, enable the pins.
+  // Start with the LEDs off (built-in LED 0 is off if true, on if false.
+  // External LED 1 is the opposite: off if false, on if true.
+  PORTA |= 1<<LED0 & ~(LED1) & ~(RELAY0);
+  
+  // USART Receive Complete interrupt stuff
+  UCSRB |= (1 << RXCIE ); // Enable Receive Complete Interrupt Enable interrupt
+  sei(); // Enable Global Interrupt Enable flag
 
-	// Loop forever, do nothing. Interrupts handle everything now.
+  // Loop forever, do nothing. Interrupts handle everything now.
   // See the ISR() interrupt handler, elsewere in this file.
-	for(;;)
-	{}
+  for(;;)
+  {}
 }
 
 
@@ -128,29 +128,29 @@ int main(void)
 // interrupt name, and specify ISR_BLOCK just because you need to.
 ISR(USART_RXC_vect, ISR_BLOCK)
 {
-	// User input byte
-	unsigned char cmd;
+  // User input byte
+  unsigned char cmd;
 
-	// Read input from USART
-	cmd = USART_Receive();
+  // Read input from USART
+  cmd = USART_Receive();
 
-	// Turn LED 0 on/off
-	if(cmd & 1<<C_LED0) 
-		PORTA &= ~(LED0);   // Turn on LED 0
-	else 
-		PORTA |= LED0;      // Turn off LED 0
+  // Turn LED 0 on/off
+  if(cmd & 1<<C_LED0) 
+    PORTA &= ~(LED0);   // Turn on LED 0
+  else 
+    PORTA |= LED0;      // Turn off LED 0
 
-	// Turn LED 1 on/off
-	if(cmd & 1<<C_LED1) 
-		PORTA |= LED1;      // Turn on LED 1
-	else 
-		PORTA &= ~(LED1);   // Turn off LED 1
+  // Turn LED 1 on/off
+  if(cmd & 1<<C_LED1) 
+    PORTA |= LED1;      // Turn on LED 1
+  else 
+    PORTA &= ~(LED1);   // Turn off LED 1
 
-	// Turn RELAY 0 on/off
-	if(cmd & 1<<C_RELAY0) 
-		PORTA |= RELAY0;    // Turn on RELAY 0
-	else 
-		PORTA &= ~(RELAY0); // Turn off RELAY 0
+  // Turn RELAY 0 on/off
+  if(cmd & 1<<C_RELAY0) 
+    PORTA |= RELAY0;    // Turn on RELAY 0
+  else 
+    PORTA &= ~(RELAY0); // Turn off RELAY 0
 }
 
 
