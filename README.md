@@ -68,6 +68,11 @@ You get the idea.
 
 This program uses interrupts instead of polling. It's better that way.
 
+Due to the proprietary nature of TPI programming and mEDBG programmers
+(both of which are required for programming ATTiny104 MCUs), you will need
+Atmel Studio on Windows to do anything with any of this code. Sorry, blame
+Atmel for not going to Eclipse route (grrr). Some day, some day...
+
 The serial port in the terminal program needs to be set to 4800/8N1 to
 communicate.  I had problems with higher baud rates. This is most likely
 the result of the default clock divider on the board (8MHz divided by 8 by
