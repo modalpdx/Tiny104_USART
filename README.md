@@ -22,45 +22,30 @@ to program this MCU. On Windows, I highly recommend you use RealTerm as
 your terminal program. It offers significantly more granular functionality
 than basic serial terminals. Programmers will love it.
 
-RealTerm's "Send" tab can send byte strings (enter the hex or 8bit numeric
-value in the form field and click "Send Numbers"). If you're not on
-Windows, find a terminal program that allows sending bytes. SENDING A BYTE
-WITH SET BITS IS THE ONLY WAY TO TURN ANYTHING ON/OFF.
+RealTerm's "Send" tab can send byte strings (enter the hex value in the
+form field and click "Send Numbers"). If you're not on Windows, find a
+terminal program that allows sending bytes. Moserial on Linux seems to
+work, as do others I assume. 
 
-Component bits looked like this during my experimentation:
+The output pins used here are PA0 - PA7, mapped to bits 0 - 7 in the byte
+you'll be sending to the MCU. 5V logic is used here, so don't plug in 3.3V
+components without adding some kind of voltage regulation.
 
-- LED 0   (built-in, connected to pin PA5) is bit 0
-- LED 1   (external, connected to pin PA7) is bit 1
-- RELAY 0 (external, the coil part connected to pin PA6) is bit 2
+Setting a bit for a pin in a serial terminal and then sending the
+resulting byte to the board will turn on the pin (and its attached
+component) only.  Unset the bit and send the resulting byte to turn it
+off.
 
-The external LED was connected inline with a 330 ohm (I think) resistor.
-
-The reed relay used in testing was a simple OMR-106H reed relay:
-
-http://www.digikey.com/product-detail/en/te-connectivity-potter-brumfield-relays/OMR-106H,V000/PB886-ND/1095211
-
-I suspect these are no longer available, but reed relays are pretty common
-and usually cheap so don't be scared to use a replacement. Just be sure it
-takes 5v on the coil part, which is what the MCU will interact with. This
-particular relay can switch power up to 125VAC which is creepy, but it
-worked just fine with a boring LED which is more my speed.
-
-Setting a bit for a component and then sending the resulting byte to the
-board will turn on that component only. Unset the bit and send the
-resulting byte to turn it off.
-
-NOTE: The on/off status of ALL COMPONENTS must be sent in each byte. State
-is not saved between received bytes! Whatever is in the byte that is
+NOTE: The on/off status of ALL COMPONENTS must be sent in each byte.
+State is not saved between received bytes! Whatever is in the byte that is
 received will determine what is on and what is off.
 
-So, in RealTerm's "Send" tab:
+So, in RealTerm's "Send" tab (or whatever serial terminal you're using):
 
-- Sending 0x03 (or 00000011) will turn on both LEDs.
-- Sending 0x02 (or 00000010) will turn on LED 1 and turn off LED 0 if it's on.
-- Sending 0x01 (or 00000001) will turn on LED 0 and turn off LED 1 if it's on.
-- Sending 0x04 (or 00000100) will turn on RELAY 0 and turn off all LEDs if any are on.
-- Sending 0x05 (or 00000101) will turn on RELAY 0 and LED 0 and turn off LED 1 if it's on.
-- Sending 0x00 (or 00000000) will turn off all components.
+Sending 0x03 (00000011) will turn on pins PA0 and PA1 and turn the rest off.
+Sending 0x42 (01000010) will turn on pins PA6 and PA1 and turn the rest off.
+Sending 0xFF (11111111) will turn on all pins.
+Sending 0x00 (00000000) will turn off all pins.
 
 You get the idea.
 
@@ -75,18 +60,26 @@ Atmel for not going to Eclipse route (grrr). Some day, some day...
 
 The serial port in the terminal program needs to be set to 4800/8N1 to
 communicate.  I had problems with higher baud rates. This is most likely
-the result of the default clock divider on the board (8MHz divided by 8 by
-default = 1MHz, but serial communication is only solid at divisions of
-something like 1.8345, not 1. The ATTiny104 datasheet explains this, so
-look there for an explanation).
+the result of the default clock divider on the Xplained Nanon board. 8MHz
+divided by 8 by default = 1MHz, but serial communication is only solid at
+divisions of something like 1.8345, not 1. The ATTiny104 datasheet
+explains this, so look there for an explanation.
+
+I admit that shoving an entire byte into a PORTx is not very glamorous. 
+I'm trying to keep things really small which means no arrays, no enums,
+no loops or switch statements, etc. This is a dumb device, and like many
+dumb devices, it trusts you completely. Sending a byte and processing it 
+immediately (and then forgetting about it) makes this all very compact.
+On my system, Atmel Studio reports 162 bytes of storage and 0 bytes of
+memory used, which fall well within the device's 1k of storage and 32 
+bytes of memory.
 
 ##CAVEATS:
 
-I have tested this locally using basic hardware and it has worked
-flawlessly. The component I attached to the reed relay was another LED (I
-know, yawn). The relay is rated up to something like 29V DC and 125V AC,
-so there isn't much that can't be operated by a similar relay, at least in
-the USA. 
+I have tested this using basic hardware and it has worked flawlessly. The
+component I attached to the reed relay was another LED (I know, yawn). The
+relay is rated up to something like 29V DC and 125V AC, so there isn't
+much that can't be operated by a similar relay, at least in the USA.
 
 That said, I will add for my own peace of mind that you should not mess
 with AC appliances and relays unless you have a background in electronics
