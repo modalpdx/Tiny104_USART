@@ -1,6 +1,6 @@
-#Atmel ATTiny104 USART experiment
+#Atmel Xplained Nano (ATTiny104) USART experiment
 
-Control two LEDs and one reed relay with an ATTiny104 MCU via USART.
+Control pins PA0-PA7 via USART using a single byte.
 
 ##BUILDING BLOCKS:
 
