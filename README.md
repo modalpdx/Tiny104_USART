@@ -42,10 +42,10 @@ received will determine what is on and what is off.
 
 So, in RealTerm's "Send" tab (or whatever serial terminal you're using):
 
-Sending 0x03 (00000011) will turn on pins PA0 and PA1 and turn the rest off.
-Sending 0x42 (01000010) will turn on pins PA6 and PA1 and turn the rest off.
-Sending 0xFF (11111111) will turn on all pins.
-Sending 0x00 (00000000) will turn off all pins.
+- Sending 0x03 (00000011) will turn on pins PA0 and PA1 and turn the rest off.
+- Sending 0x42 (01000010) will turn on pins PA6 and PA1 and turn the rest off.
+- Sending 0xFF (11111111) will turn on all pins.
+- Sending 0x00 (00000000) will turn off all pins.
 
 You get the idea.
 
