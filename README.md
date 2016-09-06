@@ -91,12 +91,12 @@ maybe they're safer?  I don't know. Check with someone that knows, don't
 take my word for it. And don't sue me if you ignore my advice and die.
 Thanks.
 
-Last bit: I enabled all 8 pins of PORTA as output, but I don't think it's
-a good idea to actually enable all 8 pins. They're set as output and are
-ready to go for convenience more than practicality. If you plan on
-connecting 8 components to the 8 PORTA pins, please check the datasheet
-for output limits and make sure you're not pushing the MCU too hard. You
-may be fine, but be careful.
+Last bit: I set up all 8 pins of PORTA as output, but I don't think it's a
+good idea to actually enable all 8 pins at the same time. They're set as
+output and are ready to go for convenience more than practicality. If you
+plan on connecting 8 components to the 8 PORTA pins, please check the
+datasheet for output limits and make sure you're not pushing the MCU too
+hard. You may be fine, but be careful.
 
 ##LICENSE:
 
