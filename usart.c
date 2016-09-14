@@ -13,29 +13,35 @@
 // Initialize the USART.
 void USART_Init( unsigned int ubrr )
 {
-   // Set baud rate.
-   // UBRR is a 12 bit value, the 4 most significant bits being "high" (H)
-   // and the 8 least significant bits being "low" (L). For UBBRH, shift the 12 
-   // bit value 8 bits to the right to get only the 4 most significant bits,
-   // then for UBRRL cast the 12 bit value to an unsigned char to snip only the 8 
-   // least significant bits.
+   // USART Baud Rate Register (UBBR{H,L})
+   // Set baud rate. UBRR is a 12 bit value, the 4 most significant bits
+   // being "high" (H) and the 8 least significant bits being "low" (L).
+   // For UBBRH, shift the 12 bit value 8 bits to the right to get only
+   // the 4 most significant bits, then for UBRRL cast the 12 bit value to
+   // an unsigned char to snip only the 8 least significant bits.
    UBRRH = (unsigned char)(ubrr>>8);
    UBRRL = (unsigned char)ubrr;
 
+   // USART Control and Status Register (UCSR{A,B,C})
    // Enable receiver and transmitter
    UCSRB = (1<<RXEN)|(1<<TXEN);
 
-   // Set frame format: sync (0<<USBS), 8data, 2stop bits (8N1 in term
-   // app? 8N2? Same output) 
+   // Set frame format: sync (0<<USBS) or async (1<<USBS), 8data, 2stop bits 
+   // (8N1 in term app? 8N2? Same output) 
    UCSRC = (1<<USBS)|(3<<UCSZ0);
  }
 
 // Transmit a single byte.
 void USART_Transmit( unsigned char data )
 {
-   // Wait for empty transmit buffer.
+   // Wait for empty transmit buffer by watching the USART Data Register 
+   // Empty bit (UDRE) and the USART Control and Status Register A (UCSRA)
+   // for the TXC flag, which means we're ready to transfer. This while
+   // loop checks for NEGATIVE values of both (not ready to transfer, and
+   // data register is not empty) and loops until both are true.
    while ( !( UCSRA & (1<<UDRE)) );
 
+   // USART Data Register for RX/TX (UDR)
    //Put data into buffer, sends the data.
    UDR = data;
 }
