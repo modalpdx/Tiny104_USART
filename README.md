@@ -56,16 +56,16 @@ This program uses interrupts instead of polling. It's better that way.
 Due to the proprietary nature of TPI programming and mEDBG programmers
 (both of which are required for programming ATTiny104 MCUs), you will need
 Atmel Studio on Windows to do anything with any of this code. Sorry, blame
-Atmel for not going to Eclipse route (grrr). Some day, some day...
+Atmel for not going the Eclipse route (grrr). Some day, some day...
 
 The serial port in the terminal program needs to be set to 4800/8N1 to
 communicate.  I had problems with higher baud rates. This is most likely
-the result of the default clock divider on the Xplained Nanon board. 8MHz
-divided by 8 by default = 1MHz, but serial communication is only solid at
-divisions of something like 1.8345, not 1. The ATTiny104 datasheet
-explains this, so look there for an explanation.
+the result of the default clock divider on the Xplained Nano board. 8MHz
+divided by 8 (the default divider) = 1MHz, but serial communication is
+only solid at divisions of something like 1.8345, not 1. The ATTiny104
+datasheet explains this, so look there if you need a real explanation.
 
-I admit that shoving an entire byte into a PORTx is not very glamorous. 
+I admit that shoving an entire byte into PORTA is not very glamorous. 
 I'm trying to keep things really small which means no arrays, no enums,
 no loops or switch statements, etc. This is a dumb device, and like many
 dumb devices, it trusts you completely. Sending a byte and processing it 
@@ -76,27 +76,27 @@ bytes of memory.
 
 ##CAVEATS:
 
-I have tested this using basic hardware and it has worked flawlessly. The
-component I attached to the reed relay was another LED (I know, yawn). The
-relay is rated up to something like 29V DC and 125V AC, so there isn't
-much that can't be operated by a similar relay, at least in the USA.
+I have tested this using LEDs and a reed relay and it has worked
+flawlessly. 
 
-That said, I will add for my own peace of mind that you should not mess
-with AC appliances and relays unless you have a background in electronics
-or electrical engineering. In other words, don't take your AC torch-lamp
-and splice the power cord through the relay! Bad! Only work with DC if
-possible. I'm fairly sure (but not positive) that appliances that have
-power bricks in their cords (sometimes called "wall warts") are DC, so
-maybe they're safer?  I don't know. Check with someone that knows, don't
-take my word for it. And don't sue me if you ignore my advice and die.
-Thanks.
+The component I attached to the reed relay was another LED (I know, yawn).
+My relay is rated up to something like 29V DC and 125V AC, so there isn't
+much that can't be operated by a similar relay, at least in the USA. That
+said, I will state for my own peace of mind that you should not mess with
+AC appliances and relays unless you have a background in electronics or
+electrical engineering. In other words, don't take your AC torch-lamp and
+splice the power cord through the relay! Bad! Only work with DC if
+possible. I am fairly certain that appliances that have power bricks in
+their cords (sometimes called "wall warts") are DC, so maybe they're
+safer?  I don't know. Check with someone that knows, don't take my word
+for it. And don't sue me if you ignore my advice and die.  Thanks.
 
 Last bit: I set up all 8 pins of PORTA as output, but I don't think it's a
 good idea to actually enable all 8 pins at the same time. They're set as
 output and are ready to go for convenience more than practicality. If you
 plan on connecting 8 components to the 8 PORTA pins, please check the
-datasheet for output limits and make sure you're not pushing the MCU too
-hard. You may be fine, but be careful.
+datasheet for output current limitations and make sure you're not pushing
+the MCU too hard. You may be fine, but be careful.
 
 ##LICENSE:
 
